@@ -150,10 +150,19 @@ Write a structured bug analysis as JSON:
     return BugAnalysisSchema.parse(parsed);
   }
 
+  /** Attach the consolidated Playwright session recording (session.webm) to filed bugs. */
+  async attachSessionVideoToBugs(bugKeys: string[], videoPath: string): Promise<void> {
+    for (const key of bugKeys) {
+      await jiraClient.uploadAttachment(key, videoPath, "session.webm");
+    }
+  }
+
   async createJiraBug(
     analysis: BugAnalysis,
     relatedTicket: string,
     screenshotPaths: string[],
+    /** Final session.webm path when already available (or omit and use {@link attachSessionVideoToBugs} post-run). */
+    sessionVideoPath?: string | null,
   ): Promise<string> {
     const summary = analysis.title.length > 255 ? analysis.title.slice(0, 252) + "..." : analysis.title;
 
@@ -167,6 +176,9 @@ Write a structured bug analysis as JSON:
     for (const filePath of screenshotPaths) {
       await jiraClient.uploadAttachment(key, filePath, basenameFromPath(filePath));
     }
+    if (sessionVideoPath) {
+      await jiraClient.uploadAttachment(key, sessionVideoPath, "session.webm");
+    }
 
     return key;
   }
@@ -179,6 +191,8 @@ Write a structured bug analysis as JSON:
       outputDirectory?: string;
       /** When provided, drives row status and counts (e.g. verification-based pass/fail). */
       stepOutcomes?: Array<"pass" | "fail" | "skipped" | "stuck">;
+      /** Final Playwright session.webm — embedded above the results table. */
+      videoPath?: string | null;
     },
   ): Promise<void> {
     const stamp = new Date().toISOString().replace(/[:.]/g, "-");
@@ -269,6 +283,21 @@ Write a structured bug analysis as JSON:
         ? "<em>None</em>"
         : bugKeys.map((k) => escapeHtml(k)).join(", ");
 
+    let sessionVideoHtml = "";
+    const vp = options?.videoPath?.trim();
+    if (vp) {
+      try {
+        const buf = await readFile(vp);
+        const b64 = buf.toString("base64");
+        sessionVideoHtml = `
+  <h2>Session recording</h2>
+  <video class="session-video" controls src="data:video/webm;base64,${b64}"></video>`;
+      } catch {
+        sessionVideoHtml =
+          '<p class="meta muted">Session recording unavailable (file missing or unreadable).</p>';
+      }
+    }
+
     const html = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -292,6 +321,7 @@ Write a structured bug analysis as JSON:
     .shots img { max-width: 280px; display: block; margin-top: 4px; }
     .muted { color: #666; }
     .meta { margin: 8px 0; }
+    .session-video { max-width: min(960px, 100%); margin-top: 8px; border-radius: 8px; border: 1px solid #ccc; }
   </style>
 </head>
 <body>
@@ -300,6 +330,7 @@ Write a structured bug analysis as JSON:
   <p class="meta"><strong>Summary:</strong> ${passed}/${plan.steps.length} steps passed,
     ${failed} failed, ${skipped} skipped.</p>
   <p class="meta"><strong>Bugs filed:</strong> ${bugsList}</p>
+  ${sessionVideoHtml}
   <table>
     <thead>
       <tr>

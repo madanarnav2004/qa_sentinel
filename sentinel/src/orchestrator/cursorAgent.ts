@@ -57,7 +57,13 @@ export async function triggerCursorAutoFix(
   bugKey: string,
   analysis: BugAnalysis,
   _issue: JiraIssue,
+  options?: { dryRun?: boolean },
 ): Promise<void> {
+  if (options?.dryRun) {
+    console.log("[DRY-RUN] Would trigger Cursor Cloud Agent auto-fix");
+    return;
+  }
+
   const apiKey = process.env.CURSOR_API_KEY?.trim();
   const repoUrl = process.env.REPO_URL?.trim();
   if (!apiKey) {

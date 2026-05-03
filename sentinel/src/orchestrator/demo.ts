@@ -5,6 +5,7 @@ export const DEMO_TARGET_APP_URL = "https://the-internet.herokuapp.com/login";
 
 export const DEMO_JIRA_ISSUE: JiraIssue = {
   key: "DEMO-1",
+  stagingUrl: DEMO_TARGET_APP_URL,
   summary: "User login with email and password",
   acceptanceCriteria: `
        - Valid email + password → redirect to /dashboard

@@ -9,6 +9,8 @@ export type JiraIssue = {
   description: string;
   acceptanceCriteria: string;
   status: string;
+  /** Populated from the custom field named “Staging URL” / “Test URL” (see JIRA_STAGING_URL_FIELD_ID). */
+  stagingUrl?: string;
 };
 
 export type BugReport = {
@@ -178,6 +180,29 @@ function bugReportToDescriptionAdf(data: BugReport): Record<string, unknown> {
   return { type: "doc", version: 1, content };
 }
 
+export function stagingUrlFieldId(): string {
+  return process.env.JIRA_STAGING_URL_FIELD_ID?.trim() || "customfield_10100";
+}
+
+/** Normalize URL-ish values from Jira custom fields (string or hosted-object URL fields). */
+function coerceStagingUrlValue(raw: unknown): string | undefined {
+  if (raw == null) return undefined;
+  if (typeof raw === "string") {
+    const t = raw.trim();
+    return t || undefined;
+  }
+  if (typeof raw === "object") {
+    const o = raw as Record<string, unknown>;
+    if (typeof o.url === "string" && o.url.trim()) return o.url.trim();
+    if (typeof o.href === "string" && o.href.trim()) return o.href.trim();
+  }
+  return undefined;
+}
+
+function extractStagingUrlFromFields(fields: Record<string, unknown>): string | undefined {
+  return coerceStagingUrlValue(fields[stagingUrlFieldId()]);
+}
+
 function severityToPriorityName(severity: string): string {
   const s = severity.toLowerCase();
   if (s === "critical") return "Highest";
@@ -188,11 +213,13 @@ function severityToPriorityName(severity: string): string {
 }
 
 function mapEnvelopeToIssue(envelope: z.infer<typeof IssueEnvelopeSchema>): JiraIssue {
+  const fields = envelope.fields as Record<string, unknown>;
   const descriptionPlain = adfToPlainText(envelope.fields.description ?? null);
   const acceptanceCriteria = extractAcceptanceCriteria(
     envelope.fields.description ?? null,
     descriptionPlain,
   );
+  const stagingUrl = extractStagingUrlFromFields(fields);
 
   return {
     key: envelope.key,
@@ -200,6 +227,7 @@ function mapEnvelopeToIssue(envelope: z.infer<typeof IssueEnvelopeSchema>): Jira
     description: descriptionPlain,
     acceptanceCriteria,
     status: envelope.fields.status.name,
+    ...(stagingUrl ? { stagingUrl } : {}),
   };
 }
 
@@ -236,7 +264,11 @@ class JiraApiClient {
   }
 
   async fetchIssue(issueKey: string): Promise<JiraIssue> {
-    const res = await this.http.get(`/rest/api/3/issue/${encodeURIComponent(issueKey)}`);
+    const stagingId = stagingUrlFieldId();
+    const fieldList = ["summary", "description", "status", stagingId];
+    const res = await this.http.get(`/rest/api/3/issue/${encodeURIComponent(issueKey)}`, {
+      params: { fields: fieldList.join(",") },
+    });
     if (res.status < 200 || res.status >= 300) {
       throw new Error(`Jira fetchIssue failed (${res.status}): ${JSON.stringify(res.data)}`);
     }

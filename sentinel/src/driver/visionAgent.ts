@@ -1,7 +1,9 @@
 import { createHash } from "crypto";
+import { copyFile, mkdir } from "fs/promises";
+import path from "path";
 
 import type { ChatSession } from "@google/generative-ai";
-import { chromium, type Browser, type Page } from "playwright";
+import { chromium, type Browser, type BrowserContext, type Page } from "playwright";
 import { z } from "zod";
 
 import { visionModel } from "../llm/geminiClient";
@@ -75,6 +77,7 @@ function parseModelJson<T>(text: string, schema: z.ZodType<T>): T {
 
 export class VisionAgent {
   private browser?: Browser;
+  private context?: BrowserContext;
   private page?: Page;
   private chat?: ChatSession;
 
@@ -87,10 +90,17 @@ export class VisionAgent {
 
   async init(): Promise<void> {
     this.browser = await chromium.launch({ headless: true });
-    const context = await this.browser.newContext({
+    const videoDir = path.join(process.cwd(), "reports", "videos");
+    await mkdir(videoDir, { recursive: true });
+
+    this.context = await this.browser.newContext({
       viewport: { width: 1280, height: 800 },
+      recordVideo: {
+        dir: videoDir,
+        size: { width: 1280, height: 800 },
+      },
     });
-    this.page = await context.newPage();
+    this.page = await this.context.newPage();
 
     const target = process.env.TARGET_APP_URL?.trim();
     if (target) {
@@ -347,10 +357,37 @@ Return JSON: { satisfied: boolean, reason: string, discrepancy?: string }`,
     }
   }
 
+  /**
+   * Finalizes the tab recording (closes the page), copies WebM into destDir/session.webm.
+   * Call before {@link close}; context/browser shutdown still happens in {@link close}.
+   */
+  async saveVideo(destDir: string): Promise<string | null> {
+    await mkdir(destDir, { recursive: true });
+    const page = this.page;
+    if (!page) return null;
+
+    const video = page.video();
+    await page.close();
+    this.page = undefined;
+
+    if (!video) return null;
+
+    const videoPath = await video.path();
+    const dest = path.join(destDir, "session.webm");
+    await copyFile(videoPath, dest);
+    return dest;
+  }
+
   async close(): Promise<void> {
+    // IMPORTANT: context must close before browser to flush video artifacts.
+    if (this.page) {
+      await this.page.close().catch(() => {});
+      this.page = undefined;
+    }
+    await this.context?.close();
+    this.context = undefined;
     await this.browser?.close();
     this.browser = undefined;
-    this.page = undefined;
     this.chat = undefined;
   }
 }

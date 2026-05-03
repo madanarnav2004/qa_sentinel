@@ -53,6 +53,18 @@ npm start -- --demo
 
 Demo mode skips creating real Jira bugs and Cursor agent triggers; it still exercises Gemini reasoning, vision, and HTML reporting.
 
+## Dry run
+
+Run the full browser and analysis pipeline without creating Jira issues or spawning Cursor agents:
+
+```bash
+npx ts-node src/orchestrator/index.ts PROJ-123 --dry-run
+# or
+npm start -- PROJ-123 --dry-run
+```
+
+Failed steps still produce local screenshots, bug analysis logs (`[DRY-RUN] Would file Jira bug…`), and the HTML report under `reports/<timestamp>/`.
+
 ## Why Gemini
 
 - **Native multimodal**: Screenshots go in as image parts alongside DOM summaries—no extra vision pipeline.

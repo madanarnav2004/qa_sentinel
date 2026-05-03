@@ -2,3 +2,6 @@ node_modules/
 dist/
 .env
 *.log
+
+# Playwright recordVideo temp artifacts (final session.webm is copied into reports/<run>/)
+reports/videos/
