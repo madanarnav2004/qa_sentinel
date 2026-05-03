@@ -1,0 +1,29 @@
+{
+  "projectId": "8604015484175847747",
+  "projectTitle": "Sentinel Autonomous QA",
+  "source": "Stitch MCP get_screen / list_screens (Cursor)",
+  "note": "Signed URLs expire; re-call Stitch MCP get_screen and curl again when previews break.",
+  "screens": [
+    {
+      "id": "5f73dfcbe2e94a73a5801b55f1c7d009",
+      "slug": "run-panel",
+      "title": "Run Panel",
+      "html": "stitch-bundle/run-panel/code.html",
+      "png": "stitch-bundle/run-panel/screen.png"
+    },
+    {
+      "id": "5392acc77c1644ab916b8b3abdb98297",
+      "slug": "agent-log",
+      "title": "Agent Log",
+      "html": "stitch-bundle/agent-log/code.html",
+      "png": "stitch-bundle/agent-log/screen.png"
+    },
+    {
+      "id": "0f3d65cebbd84c3196f76c3d351f9bb5",
+      "slug": "bug-feed",
+      "title": "Bug Feed",
+      "html": "stitch-bundle/bug-feed/code.html",
+      "png": "stitch-bundle/bug-feed/screen.png"
+    }
+  ]
+}

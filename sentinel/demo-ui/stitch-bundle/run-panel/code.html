@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sentinel - Run Panel</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-family: 'Material Symbols Outlined';
+            font-weight: normal;
+            font-style: normal;
+            font-size: 24px;
+            line-height: 1;
+            letter-spacing: normal;
+            text-transform: none;
+            display: inline-block;
+            white-space: nowrap;
+            word-wrap: normal;
+            direction: ltr;
+            -webkit-font-feature-settings: 'liga';
+            -webkit-font-smoothing: antialiased;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-fixed": "#301400",
+                        "tertiary-fixed": "#ffdcc5",
+                        "inverse-primary": "#c0c1ff",
+                        "inverse-on-surface": "#eaf1ff",
+                        "tertiary-container": "#b55d00",
+                        "surface-dim": "#cbdbf5",
+                        "on-primary-fixed-variant": "#2f2ebe",
+                        "secondary-container": "#6cf8bb",
+                        "on-surface-variant": "#464554",
+                        "on-primary-fixed": "#07006c",
+                        "on-secondary": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "secondary": "#006c49",
+                        "inverse-surface": "#213145",
+                        "on-primary": "#ffffff",
+                        "primary-fixed": "#e1e0ff",
+                        "on-surface": "#0b1c30",
+                        "surface-container": "#e5eeff",
+                        "surface": "#f8f9ff",
+                        "error-container": "#ffdad6",
+                        "background": "#f8f9ff",
+                        "on-tertiary-fixed-variant": "#703700",
+                        "surface-variant": "#d3e4fe",
+                        "on-secondary-container": "#00714d",
+                        "on-tertiary-container": "#fffbff",
+                        "error": "#ba1a1a",
+                        "surface-container-highest": "#d3e4fe",
+                        "tertiary": "#904900",
+                        "on-secondary-fixed-variant": "#005236",
+                        "tertiary-fixed-dim": "#ffb783",
+                        "outline": "#767586",
+                        "primary": "#4648d4",
+                        "on-background": "#0b1c30",
+                        "on-primary-container": "#fffbff",
+                        "primary-fixed-dim": "#c0c1ff",
+                        "primary-container": "#6063ee",
+                        "secondary-fixed-dim": "#4edea3",
+                        "surface-container-low": "#eff4ff",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "outline-variant": "#c7c4d7",
+                        "surface-container-high": "#dce9ff",
+                        "surface-tint": "#494bd6",
+                        "secondary-fixed": "#6ffbbe",
+                        "on-error": "#ffffff",
+                        "on-secondary-fixed": "#002113",
+                        "surface-bright": "#f8f9ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xs": "4px",
+                        "lg": "24px",
+                        "sm": "8px",
+                        "md": "16px",
+                        "base": "4px",
+                        "container-max": "1440px",
+                        "sidebar-width": "260px",
+                        "xl": "32px"
+                    },
+                    "fontFamily": {
+                        "h2": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "body-md": ["Inter"],
+                        "h3": ["Inter"],
+                        "h1": ["Inter"],
+                        "mono": ["monospace"]
+                    },
+                    "fontSize": {
+                        "h2": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "h3": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "h1": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "mono": ["13px", { "lineHeight": "20px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body-md h-screen overflow-hidden flex">
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-screen w-[260px] border-r bg-[#111111] border-white/10 shadow-none z-30 flex flex-col overflow-y-auto">
+<div class="p-6 flex items-center gap-3 border-b border-white/10">
+<span class="material-symbols-outlined text-white text-[28px]" style="font-variation-settings: 'FILL' 1;">security</span>
+<div>
+<h1 class="text-xl font-bold tracking-tight text-white font-h3">Sentinel</h1>
+<p class="text-slate-400 font-label-caps text-label-caps">Autonomous QA</p>
+</div>
+</div>
+<nav class="flex-1 py-4 font-inter antialiased text-sm flex flex-col h-full overflow-y-auto">
+<!-- Active Tab -->
+<a class="flex items-center gap-3 bg-indigo-600/10 text-white border-l-4 border-indigo-500 px-6 py-3 hover:bg-white/5 hover:text-white transition-all duration-200 active:opacity-80 transition-opacity" href="#">
+<span class="material-symbols-outlined">play_circle</span>
+<span class="font-body-md text-body-md font-medium">Run Panel</span>
+</a>
+<!-- Inactive Tabs -->
+<a class="flex items-center gap-3 text-slate-400 px-6 py-3 hover:bg-white/5 hover:text-white transition-all duration-200 active:opacity-80 transition-opacity" href="#">
+<span class="material-symbols-outlined">bug_report</span>
+<span class="font-body-md text-body-md">Bug Feed</span>
+</a>
+<a class="flex items-center gap-3 text-slate-400 px-6 py-3 hover:bg-white/5 hover:text-white transition-all duration-200 active:opacity-80 transition-opacity" href="#">
+<span class="material-symbols-outlined">terminal</span>
+<span class="font-body-md text-body-md">Agent Log</span>
+</a>
+</nav>
+</aside>
+<!-- TopAppBar -->
+<header class="fixed top-0 ml-[260px] w-[calc(100%-260px)] z-20 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shadow-sm flex items-center justify-between h-16 px-8">
+<div class="flex items-center gap-4">
+<span class="text-lg font-bold text-slate-900 dark:text-white font-h3 text-h3">Run Dashboard</span>
+</div>
+<div class="flex items-center gap-md">
+<div class="flex items-center gap-2 px-3 py-1 bg-surface-container-high rounded-full border border-outline-variant">
+<span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+<span class="font-label-caps text-label-caps text-on-surface-variant">Agent Running</span>
+</div>
+<div class="px-2 py-1 bg-primary-container text-on-primary-container rounded border border-primary-fixed font-label-caps text-label-caps">
+                Pro
+            </div>
+<div class="flex items-center gap-2 ml-4 text-indigo-600 dark:text-indigo-400 font-inter font-medium text-sm">
+<button class="p-2 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors scale-95 transition-transform duration-150">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors scale-95 transition-transform duration-150">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Main Canvas -->
+<main class="ml-[260px] mt-[64px] w-[calc(100%-260px)] h-[calc(100vh-64px)] overflow-y-auto bg-background p-xl flex flex-col gap-lg">
+<!-- Header / Controls -->
+<div class="flex flex-col md:flex-row gap-md justify-between items-start md:items-center bg-surface-container-lowest border border-outline-variant rounded-xl p-md shadow-sm">
+<div class="flex-1 w-full max-w-2xl flex items-center gap-sm">
+<div class="relative flex-1">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-surface border border-outline-variant rounded-lg font-body-md text-body-md text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-shadow" placeholder="Enter Jira Ticket Key (e.g. QA-1042)" type="text"/>
+</div>
+<button class="bg-secondary text-on-secondary px-6 py-2 rounded-lg font-label-caps text-label-caps flex items-center gap-2 hover:opacity-90 transition-opacity whitespace-nowrap shadow-sm">
+<span class="material-symbols-outlined text-[18px]">play_arrow</span>
+                    Run Sentinel
+                </button>
+</div>
+<div class="flex items-center bg-surface-container rounded-lg p-1 border border-outline-variant">
+<button class="px-4 py-1.5 rounded text-on-surface-variant font-label-caps text-label-caps hover:bg-surface-variant transition-colors">
+                    Fast (Flash)
+                </button>
+<button class="px-4 py-1.5 bg-surface-container-lowest rounded border border-outline-variant shadow-sm text-primary font-label-caps text-label-caps">
+                    Deep (Pro)
+                </button>
+</div>
+</div>
+<!-- Progress Table Section -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl shadow-[0_1px_3px_0_rgba(0,0,0,0.1),0_1px_2px_0_rgba(0,0,0,0.06)] overflow-hidden flex flex-col flex-1">
+<div class="px-md py-4 border-b border-outline-variant bg-surface flex justify-between items-center">
+<h2 class="font-h3 text-h3 text-on-surface">Execution Log: QA-1042</h2>
+<span class="font-mono text-mono text-outline">Runtime: 00:02:14</span>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="border-b border-outline-variant bg-surface-container-low font-label-caps text-label-caps text-on-surface-variant">
+<th class="py-3 px-4 w-16 text-center">Step</th>
+<th class="py-3 px-4">Action</th>
+<th class="py-3 px-4">Target Element</th>
+<th class="py-3 px-4 w-32 text-center">Status</th>
+<th class="py-3 px-4 w-24 text-right">Duration</th>
+</tr>
+</thead>
+<tbody class="font-body-md text-body-md text-on-surface">
+<!-- Row 1: Success -->
+<tr class="border-b border-outline-variant hover:bg-surface-container-low transition-colors">
+<td class="py-3 px-4 text-center font-mono text-outline">01</td>
+<td class="py-3 px-4">Navigate</td>
+<td class="py-3 px-4 font-mono text-xs bg-surface-container px-2 py-1 rounded inline-block">https://staging.app.com/login</td>
+<td class="py-3 px-4 text-center">
+<span class="material-symbols-outlined text-secondary text-[20px]">check_circle</span>
+</td>
+<td class="py-3 px-4 text-right text-outline font-mono">1.2s</td>
+</tr>
+<!-- Row 2: Success -->
+<tr class="border-b border-outline-variant hover:bg-surface-container-low transition-colors">
+<td class="py-3 px-4 text-center font-mono text-outline">02</td>
+<td class="py-3 px-4">Input Text</td>
+<td class="py-3 px-4 font-mono text-xs bg-surface-container px-2 py-1 rounded inline-block">input#username</td>
+<td class="py-3 px-4 text-center">
+<span class="material-symbols-outlined text-secondary text-[20px]">check_circle</span>
+</td>
+<td class="py-3 px-4 text-right text-outline font-mono">0.8s</td>
+</tr>
+<!-- Row 3: EXPANDED ROW (Error) -->
+<tr class="bg-error-container/10 border-l-4 border-error border-b border-outline-variant">
+<td class="py-3 px-4 text-center font-mono text-error font-medium">03</td>
+<td class="py-3 px-4 font-medium">Assert Visibility</td>
+<td class="py-3 px-4 font-mono text-xs bg-surface-container px-2 py-1 rounded inline-block border border-error/20">div.dashboard-widget-user</td>
+<td class="py-3 px-4 text-center">
+<span class="material-symbols-outlined text-error text-[20px]">cancel</span>
+</td>
+<td class="py-3 px-4 text-right text-outline font-mono">5.0s</td>
+</tr>
+<!-- Expanded Details for Row 3 -->
+<tr class="bg-surface-container-low border-b border-outline-variant">
+<td class="p-md pt-0" colspan="5">
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-md mt-sm grid grid-cols-1 xl:grid-cols-3 gap-md shadow-sm">
+<!-- Reasoning & Text -->
+<div class="xl:col-span-1 flex flex-col gap-sm">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-primary text-[18px]">smart_toy</span>
+<span class="font-label-caps text-label-caps text-primary">Gemini Reasoning</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant bg-surface p-3 rounded border border-outline-variant/50 text-sm leading-relaxed">
+                                            The target element <code>div.dashboard-widget-user</code> was not found within the 5000ms timeout. Visual analysis indicates the dashboard loaded, but the layout is shifted, and the user widget is missing. This suggests a potential API failure or a regression in the dashboard rendering component.
+                                        </p>
+<div class="grid grid-cols-2 gap-2 mt-2">
+<div class="bg-surface p-2 rounded border border-outline-variant/50">
+<div class="font-label-caps text-label-caps text-outline mb-1 text-[10px]">Expected</div>
+<div class="font-mono text-mono text-xs text-secondary truncate">Element Visible</div>
+</div>
+<div class="bg-error-container/20 p-2 rounded border border-error/20">
+<div class="font-label-caps text-label-caps text-error mb-1 text-[10px]">Actual</div>
+<div class="font-mono text-mono text-xs text-error truncate">Timeout / Not Found</div>
+</div>
+</div>
+<button class="mt-auto w-full bg-surface border border-outline-variant text-on-surface font-label-caps text-label-caps py-2 rounded flex items-center justify-center gap-2 hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined text-[16px]">bug_report</span>
+                                            Create Jira Bug
+                                        </button>
+</div>
+<!-- Screenshots -->
+<div class="xl:col-span-2 grid grid-cols-2 gap-md">
+<div class="flex flex-col gap-1">
+<span class="font-label-caps text-label-caps text-outline text-[10px]">Expected Baseline</span>
+<div class="aspect-video bg-surface-variant rounded border border-outline-variant relative overflow-hidden group">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="A clean, modern SaaS dashboard interface displayed on a computer screen. The design is light and airy, featuring charts, data widgets, and a clear user profile widget in the top right corner. The color palette is composed of cool blues and crisp whites, representing a healthy, expected baseline UI state in a light-mode corporate software environment." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAcCmzc4nFFygptOgKTCYlzNZR6d0lLZHdzYetjeA4p-Y_WM7foxhRGoJpGS_XSXjLQLyNh3XxCDg_hzHlQqS-8i7IxqRNUS2PCapImIbiBJBFg6zUwL7rkgyNXnu8NCR5uhUW8NBGB2SbBV8kErp1lKWedj-yucRBobaXeUXLFsdLws4bAmho5PUUgCMnKpOHV9AuP2zDDGS_vmJDsGQ-QYtcOYmR2tUyL-vAqDJj_PR1qYOld8Q8UL9Sk3YD4ptJBcftLILxIer0');"></div>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<span class="font-label-caps text-label-caps text-error text-[10px]">Actual Result (Failure)</span>
+<div class="aspect-video bg-surface-variant rounded border-2 border-error relative overflow-hidden group">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="A partially broken or loading SaaS dashboard interface displayed on a computer screen. While structural elements exist, a prominent user profile widget is noticeably missing or failed to load. A faint red bounding box or overlay highlights the empty space where the component should be, emphasizing a critical UI regression in a light-mode software testing context." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAjV8qoOBKr1Ng46fTaU8IKQr2LLZaJWZSK2U567AikyzHLSsaH_2br2OYmi27hi_vsxztHpZOBBr-VCKvG_CRcbv652rEt437PTaHpkzr_yfX4nFf79_A8EoDqjQPJVig-TsRD0RTBlTCFkVZYrToOGBMJnz_8DAtyvHXT841DKozn0nK07z4OEqUjrehOjAmnQpsDl6rcGEoQMTuP5ytvbp9rY-a3ez_oENgjUX_CdhLv5_mx9bOUQYpiAcsXfiG-6azbe1nEZss');"></div>
+<div class="absolute top-4 right-4 w-12 h-12 border-2 border-error border-dashed rounded animate-pulse"></div>
+</div>
+</div>
+</div>
+</div>
+</td>
+</tr>
+<!-- Row 4: Pending -->
+<tr class="border-b border-outline-variant bg-surface opacity-50">
+<td class="py-3 px-4 text-center font-mono text-outline">04</td>
+<td class="py-3 px-4">Click</td>
+<td class="py-3 px-4 font-mono text-xs bg-surface-container px-2 py-1 rounded inline-block">button#logout</td>
+<td class="py-3 px-4 text-center">
+<span class="material-symbols-outlined text-outline text-[20px]">radio_button_unchecked</span>
+</td>
+<td class="py-3 px-4 text-right text-outline font-mono">--</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</main>
+</body></html>

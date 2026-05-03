@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bug Feed - Sentinel</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-tertiary-fixed": "#301400",
+                      "tertiary-fixed": "#ffdcc5",
+                      "inverse-primary": "#c0c1ff",
+                      "inverse-on-surface": "#eaf1ff",
+                      "tertiary-container": "#b55d00",
+                      "surface-dim": "#cbdbf5",
+                      "on-primary-fixed-variant": "#2f2ebe",
+                      "secondary-container": "#6cf8bb",
+                      "on-surface-variant": "#464554",
+                      "on-primary-fixed": "#07006c",
+                      "on-secondary": "#ffffff",
+                      "on-error-container": "#93000a",
+                      "secondary": "#006c49",
+                      "inverse-surface": "#213145",
+                      "on-primary": "#ffffff",
+                      "primary-fixed": "#e1e0ff",
+                      "on-surface": "#0b1c30",
+                      "surface-container": "#e5eeff",
+                      "surface": "#f8f9ff",
+                      "error-container": "#ffdad6",
+                      "background": "#f8f9ff",
+                      "on-tertiary-fixed-variant": "#703700",
+                      "surface-variant": "#d3e4fe",
+                      "on-secondary-container": "#00714d",
+                      "on-tertiary-container": "#fffbff",
+                      "error": "#ba1a1a",
+                      "surface-container-highest": "#d3e4fe",
+                      "tertiary": "#904900",
+                      "on-secondary-fixed-variant": "#005236",
+                      "tertiary-fixed-dim": "#ffb783",
+                      "outline": "#767586",
+                      "primary": "#4648d4",
+                      "on-background": "#0b1c30",
+                      "on-primary-container": "#fffbff",
+                      "primary-fixed-dim": "#c0c1ff",
+                      "primary-container": "#6063ee",
+                      "secondary-fixed-dim": "#4edea3",
+                      "surface-container-low": "#eff4ff",
+                      "surface-container-lowest": "#ffffff",
+                      "on-tertiary": "#ffffff",
+                      "outline-variant": "#c7c4d7",
+                      "surface-container-high": "#dce9ff",
+                      "surface-tint": "#494bd6",
+                      "secondary-fixed": "#6ffbbe",
+                      "on-error": "#ffffff",
+                      "on-secondary-fixed": "#002113",
+                      "surface-bright": "#f8f9ff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "xs": "4px",
+                      "lg": "24px",
+                      "sm": "8px",
+                      "md": "16px",
+                      "base": "4px",
+                      "container-max": "1440px",
+                      "sidebar-width": "260px",
+                      "xl": "32px"
+              },
+              "fontFamily": {
+                      "h2": ["Inter"],
+                      "body-lg": ["Inter"],
+                      "label-caps": ["Inter"],
+                      "body-md": ["Inter"],
+                      "h3": ["Inter"],
+                      "h1": ["Inter"],
+                      "mono": ["monospace"]
+              },
+              "fontSize": {
+                      "h2": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                      "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                      "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                      "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                      "h3": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                      "h1": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                      "mono": ["13px", { "lineHeight": "20px", "fontWeight": "400" }]
+              }
+            }
+          }
+        }
+    </script>
+<style>
+        .elevation-1 {
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+        }
+        .bg-pattern {
+            background-image: radial-gradient(var(--tw-colors-outline-variant) 1px, transparent 1px);
+            background-size: 16px 16px;
+            background-position: -8px -8px;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md text-body-md min-h-screen flex flex-col">
+<!-- SideNavBar (Generated from JSON) -->
+<nav class="fixed left-0 top-0 h-screen w-[260px] border-r border-white/10 bg-[#111111] flex flex-col h-full overflow-y-auto shadow-none z-50">
+<div class="px-6 py-8 flex items-center gap-3">
+<span class="material-symbols-outlined text-indigo-500 text-2xl" style="font-variation-settings: 'FILL' 1;">shield</span>
+<div class="flex flex-col">
+<span class="text-xl font-bold tracking-tight text-white">Sentinel</span>
+<span class="font-inter antialiased text-sm text-slate-400">Autonomous QA</span>
+</div>
+</div>
+<div class="flex flex-col mt-4">
+<a class="flex items-center gap-3 text-slate-400 px-6 py-3 hover:bg-white/5 hover:text-white transition-all duration-200 active:opacity-80 transition-opacity" href="#">
+<span class="material-symbols-outlined">play_circle</span>
+<span class="font-inter antialiased text-sm">Run Panel</span>
+</a>
+<a class="flex items-center gap-3 bg-indigo-600/10 text-white border-l-4 border-indigo-500 px-6 py-3 hover:bg-white/5 hover:text-white transition-all duration-200 active:opacity-80 transition-opacity" href="#">
+<span class="material-symbols-outlined text-indigo-500" style="font-variation-settings: 'FILL' 1;">bug_report</span>
+<span class="font-inter antialiased text-sm font-semibold">Bug Feed</span>
+</a>
+<a class="flex items-center gap-3 text-slate-400 px-6 py-3 hover:bg-white/5 hover:text-white transition-all duration-200 active:opacity-80 transition-opacity" href="#">
+<span class="material-symbols-outlined">terminal</span>
+<span class="font-inter antialiased text-sm">Agent Log</span>
+</a>
+</div>
+</nav>
+<!-- TopAppBar (Generated from JSON) -->
+<header class="sticky top-0 w-full border-b border-slate-200 dark:border-slate-800 shadow-sm bg-white/80 dark:bg-slate-900/80 backdrop-blur-md flex items-center justify-between h-16 px-8 ml-[260px] w-[calc(100%-260px)] z-40">
+<div class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-md">
+<span class="text-indigo-600 dark:text-indigo-400 font-bold font-inter font-medium text-sm">Bug Feed</span>
+</div>
+<div class="flex items-center gap-4">
+<div class="hidden">Search</div>
+<div class="flex items-center gap-2 bg-indigo-50 dark:bg-indigo-900/20 px-3 py-1.5 rounded-full border border-indigo-100 dark:border-indigo-800/50">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span>
+</span>
+<span class="font-inter font-medium text-sm text-indigo-600 dark:text-indigo-400">Agent Running</span>
+</div>
+<div class="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 px-2 py-0.5 rounded font-label-caps text-label-caps border border-slate-200 dark:border-slate-700">Pro</div>
+<div class="flex items-center gap-1">
+<button class="text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors scale-95 transition-transform duration-150 p-2 flex items-center justify-center">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors scale-95 transition-transform duration-150 p-2 flex items-center justify-center">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Main Canvas -->
+<main class="ml-[260px] flex-1 p-xl flex flex-col gap-lg bg-background">
+<!-- Header & Filters -->
+<div class="flex flex-col gap-md">
+<div class="flex justify-between items-end">
+<div>
+<h1 class="font-h1 text-h1 text-on-surface">Triage Queue</h1>
+<p class="font-body-md text-body-md text-outline mt-1">Reviewing anomalies detected in recent test runs.</p>
+</div>
+<div class="flex gap-2">
+<button class="bg-surface-container-lowest border border-outline-variant rounded-lg px-4 py-2 font-body-md text-body-md text-on-surface hover:bg-surface-container-low transition-colors flex items-center gap-2 elevation-1">
+<span class="material-symbols-outlined text-[18px]">download</span>
+                        Export
+                    </button>
+</div>
+</div>
+<!-- Filter Chips -->
+<div class="flex flex-wrap gap-2 mt-sm">
+<button class="bg-primary text-on-primary rounded-full px-4 py-1.5 font-label-caps text-label-caps border border-transparent shadow-sm">All</button>
+<button class="bg-surface-container-lowest text-on-surface rounded-full px-4 py-1.5 font-label-caps text-label-caps border border-outline-variant hover:bg-surface-container-low transition-colors">Critical</button>
+<button class="bg-surface-container-lowest text-on-surface rounded-full px-4 py-1.5 font-label-caps text-label-caps border border-outline-variant hover:bg-surface-container-low transition-colors">High</button>
+<button class="bg-surface-container-lowest text-on-surface rounded-full px-4 py-1.5 font-label-caps text-label-caps border border-outline-variant hover:bg-surface-container-low transition-colors">Open</button>
+<button class="bg-surface-container-lowest text-on-surface rounded-full px-4 py-1.5 font-label-caps text-label-caps border border-outline-variant hover:bg-surface-container-low transition-colors flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[14px] text-secondary">auto_awesome</span>
+                    Fixed by Cursor
+                </button>
+</div>
+</div>
+<!-- Bug Card Grid (Bento Style) -->
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-md mt-md">
+<!-- Card 1: Critical, Auto-fix Triggered -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant elevation-1 flex flex-col overflow-hidden group">
+<div class="h-40 w-full bg-surface-container-high relative border-b border-outline-variant overflow-hidden">
+<div class="absolute inset-0 bg-pattern opacity-50"></div>
+<img alt="" class="w-full h-full object-cover opacity-80 mix-blend-multiply filter grayscale contrast-125" data-alt="A macro photograph of lines of code on a high-resolution monitor, capturing a stark white and stark black aesthetic with subtle indigo syntax highlighting. The lighting is harsh and digital, representing a clinical, lab-grade software environment. The image emphasizes high data density and precision, typical of an engineering workstation." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAPGzOzLUVb641lPAIfw4hxCFY5kGFyZeumfsVBUifJ2GxBPOewVYXZVAJ7bNu5IdcigNEXKfOlp6k75q8t2UsLjiWC6pOa3ycl_L-z-oZjuSaAuluFOz_y3D5BIf0VmFi826iqMJNAoieCQkaJeOe38eH0EtK5n3kGyrpGSmAtMglKRjpQ7OeRTkhuzO3s_niLRfhvps1at0v-bjWUyXl-5NArtpKpxiNs2M2gQDNbc1VKHqKDfGRY4pVKZyxQzxpowsc6DWMhNyI"/>
+<div class="absolute top-sm right-sm bg-error-container text-on-error-container font-label-caps text-label-caps px-2 py-0.5 rounded shadow-sm border border-error/20 flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">warning</span>
+                        Critical
+                    </div>
+</div>
+<div class="p-md flex-1 flex flex-col">
+<div class="flex items-center justify-between mb-2">
+<span class="font-mono text-mono text-outline">QA-8492</span>
+<span class="text-[12px] text-outline">2m ago</span>
+</div>
+<h3 class="font-h3 text-h3 text-on-surface mb-3 line-clamp-2">Authentication token bypassed during OAuth redirect sequence.</h3>
+<div class="mt-auto bg-surface-container text-on-surface-variant rounded-lg p-3 border border-outline-variant/50 flex flex-col gap-2">
+<div class="flex items-center gap-2 font-label-caps text-label-caps text-primary">
+<span class="material-symbols-outlined text-[16px] animate-spin-slow">autorenew</span>
+                            Agent Auto-Fix Initiated
+                        </div>
+<div class="font-mono text-[11px] bg-white border border-outline-variant px-2 py-1 rounded text-on-surface truncate">
+                            branch: fix/QA-8492-oauth-token-validation
+                        </div>
+</div>
+</div>
+<div class="border-t border-outline-variant p-sm px-md flex justify-between items-center bg-surface-bright">
+<div class="flex -space-x-2">
+<div class="w-6 h-6 rounded-full bg-tertiary-container border border-white flex items-center justify-center text-[10px] text-white font-bold">AB</div>
+</div>
+<button class="font-label-caps text-label-caps text-primary hover:text-primary-container transition-colors flex items-center gap-1">
+                        View in Jira
+                        <span class="material-symbols-outlined text-[14px]">arrow_outward</span>
+</button>
+</div>
+</div>
+<!-- Card 2: High, Open -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant elevation-1 flex flex-col overflow-hidden group">
+<div class="h-40 w-full bg-surface-container relative border-b border-outline-variant overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-br from-surface-container-high to-surface-container-lowest opacity-80"></div>
+<img alt="" class="w-full h-full object-cover mix-blend-overlay opacity-60 grayscale" data-alt="A clean, minimalist abstract composition featuring overlapping white frosted glass panes on a light grey background. A soft, cool light illuminates the surfaces, creating subtle, elegant shadows and depth. The scene conveys a sense of high-tech precision and clean UI architecture, fitting a modern corporate design system." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA2ycWGABesYfFaYgfQIQa4zUrIWEiuGbWdN7Qq0KqxoX2vPOsv8JxfVXg9Nt9R0_waxz35WoRC0v5VBVC-gu_4ajuNOXx0i-o8D3NU65Rc778Rx7u2egpLzCNssDwtj8k0Fc3RaYtU38FlIb51oPcmMkjw6WAiXmKSjnZ1iGmej23tpx7YnRUXi96oJfDQCWNVCoUNAbg46kpk1LTLmoq7zwyhulWv9z9eCmjqPE0k5Qm8t0-q8aQHMldYtRE2XUq1eBi3DSFpzzY"/>
+<div class="absolute top-sm right-sm bg-tertiary-container text-on-tertiary-container font-label-caps text-label-caps px-2 py-0.5 rounded shadow-sm border border-tertiary/20 flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">priority_high</span>
+                        High
+                    </div>
+</div>
+<div class="p-md flex-1 flex flex-col">
+<div class="flex items-center justify-between mb-2">
+<span class="font-mono text-mono text-outline">QA-8491</span>
+<span class="text-[12px] text-outline">15m ago</span>
+</div>
+<h3 class="font-h3 text-h3 text-on-surface mb-3 line-clamp-2">Payment gateway returns 500 on valid sandbox credit cards.</h3>
+<div class="mt-auto bg-error-container/20 text-on-surface rounded-lg p-3 border border-error-container flex items-start gap-2">
+<span class="material-symbols-outlined text-[16px] text-error mt-0.5">error</span>
+<p class="font-body-md text-[13px] leading-tight">Integration tests failing across 4 main checkout flows. Requires manual review.</p>
+</div>
+</div>
+<div class="border-t border-outline-variant p-sm px-md flex justify-between items-center bg-surface-bright">
+<div class="flex -space-x-2">
+<div class="w-6 h-6 rounded-full bg-outline border border-white flex items-center justify-center text-[10px] text-white font-bold">UN</div>
+</div>
+<button class="font-label-caps text-label-caps text-primary hover:text-primary-container transition-colors flex items-center gap-1">
+                        View in Jira
+                        <span class="material-symbols-outlined text-[14px]">arrow_outward</span>
+</button>
+</div>
+</div>
+<!-- Card 3: Medium, Fixed by Cursor -->
+<div class="bg-surface-container-lowest rounded-xl border border-secondary/30 shadow-[0_0_0_1px_rgba(108,248,187,0.2)] elevation-1 flex flex-col overflow-hidden group">
+<div class="h-40 w-full bg-surface-container-lowest relative border-b border-outline-variant overflow-hidden flex items-center justify-center">
+<div class="absolute inset-0 bg-secondary/5"></div>
+<div class="flex flex-col items-center text-secondary opacity-50">
+<span class="material-symbols-outlined text-4xl mb-2">check_circle</span>
+<span class="font-mono text-xs">Test Passed</span>
+</div>
+<div class="absolute top-sm right-sm bg-surface-variant text-on-surface-variant font-label-caps text-label-caps px-2 py-0.5 rounded shadow-sm border border-outline-variant/50">
+                        Medium
+                    </div>
+</div>
+<div class="p-md flex-1 flex flex-col">
+<div class="flex items-center justify-between mb-2">
+<span class="font-mono text-mono text-outline line-through">QA-8488</span>
+<span class="text-[12px] text-outline">1h ago</span>
+</div>
+<h3 class="font-h3 text-h3 text-on-surface mb-3 line-clamp-2">Tooltip alignment breaks on mobile viewport width &lt; 375px.</h3>
+<div class="mt-auto bg-secondary-container/30 text-on-secondary-container rounded-lg p-3 border border-secondary-container flex flex-col gap-2">
+<div class="flex items-center gap-2 font-label-caps text-label-caps">
+<span class="material-symbols-outlined text-[16px] text-secondary" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+                            Resolved by Cursor Agent
+                        </div>
+<div class="flex items-center gap-1 font-mono text-[11px] text-on-surface">
+<span class="material-symbols-outlined text-[14px] text-secondary">merge</span>
+                            Merged to <span class="font-bold">main</span>
+</div>
+</div>
+</div>
+<div class="border-t border-outline-variant p-sm px-md flex justify-between items-center bg-surface-bright">
+<div class="flex -space-x-2">
+<img alt="Avatar" class="w-6 h-6 rounded-full border border-white" data-alt="A small, professional headshot avatar of a smiling man with a beard, set against a plain light gray background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDjF9fpCmWcnhaPPmQHWRzdx5_2-XJF_g2ls9dbVc7oID2zeEqKwH_8lDSZsGOAMqWjd06QW4UI5lH1q2yFqfuLLnp1t8i5czsRtl07N5rkb3YccBMtpyUwPohvf2G2I8p5pWlxOCpNLUQ8NSEGfz_RbxbVEkJZId5RbZiyXIpklTN06V4BRt3-3zGOIQe91ZUNiePs0WJsdMq4x6Sb1n11dULhVJrCBK6ZJTIin_KIWfoqRYFQiwya7xYvbYxrJeHuE_75RkT-qzk"/>
+</div>
+<button class="font-label-caps text-label-caps text-outline hover:text-on-surface transition-colors flex items-center gap-1">
+                        View in Jira
+                        <span class="material-symbols-outlined text-[14px]">arrow_outward</span>
+</button>
+</div>
+</div>
+<!-- Card 4: Critical, Open -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant elevation-1 flex flex-col overflow-hidden group">
+<div class="h-40 w-full bg-surface-container relative border-b border-outline-variant overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-tr from-error-container/20 to-transparent"></div>
+<img alt="" class="w-full h-full object-cover opacity-70 grayscale contrast-150 mix-blend-luminosity" data-alt="A close-up shot of a complex data visualization dashboard on a computer screen. The design is stark and monochromatic, emphasizing structural grids and data points. The lighting is cool and digital, conveying an analytical, lab-grade aesthetic typical of high-end enterprise software." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDpQcFDPkDq9m-mjNBK90PdXhvhD1y1C4rYoMiuwxWxxavH5FByb9rWrl6fyMP8MJEZjPApF5ldewlzpY1eOVBQygtwXcmzRAorZ7EcRUc8PeULvR864Zu7TSMeGg0GQpVuOqMhtr-6FNtPO5auX1kSdZgJFM0gy3CPztKW-9geG8cBX-Ao_dSJqxYwKOKOI919pGzZzMishKEIgq-J3RjsTpHKfL99L8H8qLSvfGBCZfAZNUgR_HgyR7tWEfMaZX9WhSVJMd6GICE"/>
+<div class="absolute top-sm right-sm bg-error-container text-on-error-container font-label-caps text-label-caps px-2 py-0.5 rounded shadow-sm border border-error/20 flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">warning</span>
+                        Critical
+                    </div>
+</div>
+<div class="p-md flex-1 flex flex-col">
+<div class="flex items-center justify-between mb-2">
+<span class="font-mono text-mono text-outline">QA-8475</span>
+<span class="text-[12px] text-outline">3h ago</span>
+</div>
+<h3 class="font-h3 text-h3 text-on-surface mb-3 line-clamp-2">Memory leak in WebGL rendering loop causing browser crash.</h3>
+<div class="mt-auto bg-surface-container text-on-surface rounded-lg p-3 border border-outline-variant flex items-start gap-2">
+<span class="material-symbols-outlined text-[16px] text-outline mt-0.5">query_stats</span>
+<p class="font-body-md text-[13px] leading-tight text-outline">Agent analysis inconclusive. Stack trace indicates native module failure.</p>
+</div>
+</div>
+<div class="border-t border-outline-variant p-sm px-md flex justify-between items-center bg-surface-bright">
+<div class="flex -space-x-2">
+<div class="w-6 h-6 rounded-full bg-outline border border-white flex items-center justify-center text-[10px] text-white font-bold">UN</div>
+</div>
+<button class="font-label-caps text-label-caps text-primary hover:text-primary-container transition-colors flex items-center gap-1">
+                        View in Jira
+                        <span class="material-symbols-outlined text-[14px]">arrow_outward</span>
+</button>
+</div>
+</div>
+<!-- Card 5: Low, Open -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant elevation-1 flex flex-col overflow-hidden group">
+<div class="h-40 w-full bg-surface-container-low relative border-b border-outline-variant overflow-hidden flex items-center justify-center">
+<span class="material-symbols-outlined text-outline/30 text-6xl">image_not_supported</span>
+<div class="absolute top-sm right-sm bg-surface-container-highest text-on-surface font-label-caps text-label-caps px-2 py-0.5 rounded shadow-sm border border-outline-variant/50">
+                        Low
+                    </div>
+</div>
+<div class="p-md flex-1 flex flex-col">
+<div class="flex items-center justify-between mb-2">
+<span class="font-mono text-mono text-outline">QA-8470</span>
+<span class="text-[12px] text-outline">5h ago</span>
+</div>
+<h3 class="font-h3 text-h3 text-on-surface mb-3 line-clamp-2">Typo in Settings -&gt; Notification preferences description text.</h3>
+<div class="mt-auto bg-surface-container-low text-on-surface rounded-lg p-3 border border-outline-variant/30 flex items-start gap-2">
+<span class="material-symbols-outlined text-[16px] text-outline mt-0.5">notes</span>
+<p class="font-body-md text-[13px] leading-tight text-outline">Visual regression only. No functional impact.</p>
+</div>
+</div>
+<div class="border-t border-outline-variant p-sm px-md flex justify-between items-center bg-surface-bright">
+<div class="flex -space-x-2">
+<img alt="Avatar" class="w-6 h-6 rounded-full border border-white" data-alt="A small, professional headshot avatar of a smiling woman, set against a plain light gray background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCgA2Yrq1cWXyOXs6uCBow1eyv9DLsmqvu9IUcvvw0uPOx56KkrQhOsvNVx5SLOcAfIc3Ev-BnzJbXd6XfDG3RgTNBKqP2o2p76oGEukp357q0OfInaJn0HA6y26wt-_xu3_IU6_qBaXqictiz4VC2h0E_wM7lEOORogPFg9BRC4euKtbujs27bYYUo3YlytW8ZH-Vjhsk7RX1m8dYfScpa-CD2EknU02j4X8uR_OFqeyAs1qFfIg2jrbonRp7GzpZq_27NJREoiMU"/>
+</div>
+<button class="font-label-caps text-label-caps text-primary hover:text-primary-container transition-colors flex items-center gap-1">
+                        View in Jira
+                        <span class="material-symbols-outlined text-[14px]">arrow_outward</span>
+</button>
+</div>
+</div>
+<!-- Card 6: High, Auto-fix Initiated -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant elevation-1 flex flex-col overflow-hidden group">
+<div class="h-40 w-full bg-surface-container relative border-b border-outline-variant overflow-hidden">
+<div class="absolute inset-0 bg-pattern opacity-30"></div>
+<img alt="" class="w-full h-full object-cover mix-blend-multiply opacity-60 grayscale" data-alt="A sterile, high-contrast digital illustration of a server rack or database structure. The palette is dominated by pure whites and deep slates. Precise, geometric lines define the hardware components, reflecting a clinical, modern corporate IT environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA5ada2dvSb7djgha4_QWe6l4LteJ5W9zZLfkbyTw6VxY64lP-K6rtzncZA2E0Rd_xVufwauBNI_CjwTmmEk2ExrvGRaGAXLN4xSLfg9omgd__QnvCnNVWQKl4J1XvIYZBqHl0pYMyCGBk3ev4MMFpCj-iauR2A5MT7pSEocTanGrjQPTg3P9sQRU8cenKzS0Yep5iiiS6mmcMUQB4aim72ZSGnV3sPJxjRIdLLlq9JN7GAvEClWURPU0vr38rpaL7ZG_T_Xys1o94"/>
+<div class="absolute top-sm right-sm bg-tertiary-container text-on-tertiary-container font-label-caps text-label-caps px-2 py-0.5 rounded shadow-sm border border-tertiary/20 flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">priority_high</span>
+                        High
+                    </div>
+</div>
+<div class="p-md flex-1 flex flex-col">
+<div class="flex items-center justify-between mb-2">
+<span class="font-mono text-mono text-outline">QA-8462</span>
+<span class="text-[12px] text-outline">8h ago</span>
+</div>
+<h3 class="font-h3 text-h3 text-on-surface mb-3 line-clamp-2">Database query timeout on User Directory filter execution.</h3>
+<div class="mt-auto bg-surface-container text-on-surface-variant rounded-lg p-3 border border-outline-variant/50 flex flex-col gap-2">
+<div class="flex items-center gap-2 font-label-caps text-label-caps text-primary">
+<span class="material-symbols-outlined text-[16px] animate-spin-slow">autorenew</span>
+                            Agent Auto-Fix Initiated
+                        </div>
+<div class="font-mono text-[11px] bg-white border border-outline-variant px-2 py-1 rounded text-on-surface truncate">
+                            branch: perf/QA-8462-optimize-dir-index
+                        </div>
+</div>
+</div>
+<div class="border-t border-outline-variant p-sm px-md flex justify-between items-center bg-surface-bright">
+<div class="flex -space-x-2">
+<div class="w-6 h-6 rounded-full bg-primary-container border border-white flex items-center justify-center text-[10px] text-white font-bold">SYS</div>
+</div>
+<button class="font-label-caps text-label-caps text-primary hover:text-primary-container transition-colors flex items-center gap-1">
+                        View in Jira
+                        <span class="material-symbols-outlined text-[14px]">arrow_outward</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+</body></html>

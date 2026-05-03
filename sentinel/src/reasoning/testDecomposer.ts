@@ -1,5 +1,7 @@
+import type { GenerativeModel } from "@google/generative-ai";
 import type { JiraIssue } from "../ingestion/jiraClient";
-import { reasoningModel } from "../llm/geminiClient";
+import { reasoningFallbackModel, reasoningModel } from "../llm/geminiClient";
+import { withRetry } from "../llm/withRetry";
 import { z } from "zod";
 
 const TestStepSchema = z.object({
@@ -38,7 +40,7 @@ function extractJsonFromModelText(text: string): string {
   return trimmed;
 }
 
-export async function decomposePRD(issue: JiraIssue): Promise<TestPlan> {
+async function decomposeWithModel(model: GenerativeModel, issue: JiraIssue): Promise<TestPlan> {
   const systemInstruction = `You are a senior QA engineer. Given a user story 
   and acceptance criteria, decompose into atomic UI test steps covering:
   - Happy path (valid inputs, success flows)
@@ -47,7 +49,7 @@ export async function decomposePRD(issue: JiraIssue): Promise<TestPlan> {
   - Permission/auth edge cases
   Return ONLY valid JSON matching the TestPlan schema. No markdown, no preamble.`;
 
-  const chat = reasoningModel.startChat({
+  const chat = model.startChat({
     systemInstruction,
     history: [],
   });
@@ -64,9 +66,21 @@ ${issue.acceptanceCriteria}
 Generate a complete TestPlan JSON object. Assign sequential IDs like "step-001".
 Ensure edgeCases includes at least 3 negative scenarios.`;
 
-  const result = await chat.sendMessage(prompt);
+  const result = await withRetry(() => chat.sendMessage(prompt));
   const text = result.response.text();
 
   const parsed: unknown = JSON.parse(extractJsonFromModelText(text));
   return TestPlanSchema.parse(parsed);
+}
+
+export async function decomposePRD(issue: JiraIssue): Promise<TestPlan> {
+  try {
+    return await decomposeWithModel(reasoningModel, issue);
+  } catch (e) {
+    console.warn(
+      "[Sentinel] Gemini 2.5 Pro reasoning failed after retries; falling back to gemini-2.0-flash.",
+      e,
+    );
+    return await decomposeWithModel(reasoningFallbackModel, issue);
+  }
 }

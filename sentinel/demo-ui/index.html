@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sentinel Autonomous QA — Demo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="top">
+      <div class="brand">
+        <div class="logo">S</div>
+        <div>
+          <h1>Sentinel Autonomous QA</h1>
+          <span>Jira → Gemini plan → Vision agent → Bug reporter</span>
+        </div>
+      </div>
+      <nav class="tabs" id="tabs">
+        <button type="button" data-tab="run" class="active">Run Panel</button>
+        <button type="button" data-tab="log">Agent Log</button>
+        <button type="button" data-tab="bugs">Bug Feed</button>
+      </nav>
+    </header>
+
+    <main>
+      <section class="panel active" id="panel-run" aria-label="Run panel">
+        <div class="ref-strip">
+          <div class="card">
+            <h2>Execute test plan</h2>
+            <p class="sub">
+              Mirrors <code>npm start -- &lt;JIRA-KEY&gt;</code> — this page runs a timed simulation of the orchestrator so you can demo UI without live keys.
+            </p>
+            <label class="field" for="jira-key">Jira issue key</label>
+            <input type="text" id="jira-key" placeholder="PROJ-123" value="DEMO-42" autocomplete="off" />
+            <div class="row" style="margin-top: 14px">
+              <button type="button" class="primary" id="btn-run">Run Sentinel (demo)</button>
+              <button type="button" class="secondary" id="btn-reset">Reset</button>
+              <span class="status-pill" id="run-status">Idle</span>
+            </div>
+            <div class="metrics" id="run-metrics">
+              <div class="metric">
+                <strong id="m-steps">—</strong>
+                <span>Steps planned</span>
+              </div>
+              <div class="metric">
+                <strong id="m-pass">—</strong>
+                <span>Passed (sim)</span>
+              </div>
+              <div class="metric">
+                <strong id="m-bugs">—</strong>
+                <span>Bugs filed (sim)</span>
+              </div>
+            </div>
+          </div>
+          <div class="ref-shot-wrap hidden" id="ref-run">
+            <img src="" alt="Stitch reference: Run Panel" id="img-run" />
+            <div class="ref-label">Stitch reference · Run Panel</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="panel-log" aria-label="Agent log">
+        <div class="ref-strip">
+          <div class="card" style="flex: 1">
+            <h2>Live trace</h2>
+            <p class="sub">Vision turns, Gemini actions, verify hooks — populated by the demo runner.</p>
+            <pre class="log" id="agent-log"></pre>
+          </div>
+          <div class="ref-shot-wrap hidden" id="ref-log">
+            <img src="" alt="Stitch reference: Agent Log" id="img-log" />
+            <div class="ref-label">Stitch reference · Agent Log</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="panel-bugs" aria-label="Bug feed">
+        <div class="ref-strip">
+          <div class="card" style="flex: 1">
+            <h2>Regression queue</h2>
+            <p class="sub">Bugs created via <code>bugReporter.createJiraBug</code> would appear here when wired to an API.</p>
+            <div class="bug-grid" id="bug-feed"></div>
+          </div>
+          <div class="ref-shot-wrap hidden" id="ref-bugs">
+            <img src="" alt="Stitch reference: Bug Feed" id="img-bugs" />
+            <div class="ref-label">Stitch reference · Bug Feed</div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script type="module" src="./demo-app.js"></script>
+  </body>
+</html>

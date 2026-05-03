@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Agent Log - Sentinel</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-tertiary-fixed": "#301400",
+                      "tertiary-fixed": "#ffdcc5",
+                      "inverse-primary": "#c0c1ff",
+                      "inverse-on-surface": "#eaf1ff",
+                      "tertiary-container": "#b55d00",
+                      "surface-dim": "#cbdbf5",
+                      "on-primary-fixed-variant": "#2f2ebe",
+                      "secondary-container": "#6cf8bb",
+                      "on-surface-variant": "#464554",
+                      "on-primary-fixed": "#07006c",
+                      "on-secondary": "#ffffff",
+                      "on-error-container": "#93000a",
+                      "secondary": "#006c49",
+                      "inverse-surface": "#213145",
+                      "on-primary": "#ffffff",
+                      "primary-fixed": "#e1e0ff",
+                      "on-surface": "#0b1c30",
+                      "surface-container": "#e5eeff",
+                      "surface": "#f8f9ff",
+                      "error-container": "#ffdad6",
+                      "background": "#f8f9ff",
+                      "on-tertiary-fixed-variant": "#703700",
+                      "surface-variant": "#d3e4fe",
+                      "on-secondary-container": "#00714d",
+                      "on-tertiary-container": "#fffbff",
+                      "error": "#ba1a1a",
+                      "surface-container-highest": "#d3e4fe",
+                      "tertiary": "#904900",
+                      "on-secondary-fixed-variant": "#005236",
+                      "tertiary-fixed-dim": "#ffb783",
+                      "outline": "#767586",
+                      "primary": "#4648d4",
+                      "on-background": "#0b1c30",
+                      "on-primary-container": "#fffbff",
+                      "primary-fixed-dim": "#c0c1ff",
+                      "primary-container": "#6063ee",
+                      "secondary-fixed-dim": "#4edea3",
+                      "surface-container-low": "#eff4ff",
+                      "surface-container-lowest": "#ffffff",
+                      "on-tertiary": "#ffffff",
+                      "outline-variant": "#c7c4d7",
+                      "surface-container-high": "#dce9ff",
+                      "surface-tint": "#494bd6",
+                      "secondary-fixed": "#6ffbbe",
+                      "on-error": "#ffffff",
+                      "on-secondary-fixed": "#002113",
+                      "surface-bright": "#f8f9ff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "xs": "4px",
+                      "lg": "24px",
+                      "sm": "8px",
+                      "md": "16px",
+                      "base": "4px",
+                      "container-max": "1440px",
+                      "sidebar-width": "260px",
+                      "xl": "32px"
+              },
+              "fontFamily": {
+                      "h2": [
+                              "Inter"
+                      ],
+                      "body-lg": [
+                              "Inter"
+                      ],
+                      "label-caps": [
+                              "Inter"
+                      ],
+                      "body-md": [
+                              "Inter"
+                      ],
+                      "h3": [
+                              "Inter"
+                      ],
+                      "h1": [
+                              "Inter"
+                      ],
+                      "mono": [
+                              "monospace"
+                      ]
+              },
+              "fontSize": {
+                      "h2": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-lg": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-caps": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "h3": [
+                              "20px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "h1": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "mono": [
+                              "13px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "400"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+        .material-symbols-outlined {
+          font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+      </style>
+</head>
+<body class="bg-background text-on-background font-body-md text-body-md antialiased overflow-hidden flex">
+<!-- SideNavBar Component -->
+<nav class="fixed left-0 top-0 h-screen w-[260px] border-r bg-[#111111] text-indigo-500 font-inter antialiased text-sm text-xl font-bold tracking-tight text-white border-white/10 shadow-none flex flex-col h-full overflow-y-auto z-20">
+<div class="p-6 border-b border-white/10 flex items-center gap-3 shrink-0">
+<span class="material-symbols-outlined text-[28px] text-indigo-500" style="font-variation-settings: 'FILL' 1;">security</span>
+<div class="flex flex-col">
+<span class="text-xl font-bold tracking-tight text-white leading-tight">Sentinel</span>
+<span class="font-inter antialiased text-[11px] text-slate-400 font-normal tracking-wide uppercase">Autonomous QA</span>
+</div>
+</div>
+<div class="flex flex-col py-4 gap-1">
+<a class="flex items-center gap-3 text-slate-400 px-6 py-3 hover:bg-white/5 hover:text-white transition-all duration-200 active:opacity-80 transition-opacity font-medium" href="#">
+<span class="material-symbols-outlined">play_circle</span>
+                Run Panel
+            </a>
+<a class="flex items-center gap-3 text-slate-400 px-6 py-3 hover:bg-white/5 hover:text-white transition-all duration-200 active:opacity-80 transition-opacity font-medium" href="#">
+<span class="material-symbols-outlined">bug_report</span>
+                Bug Feed
+            </a>
+<!-- Active State: Agent Log -->
+<a class="flex items-center gap-3 bg-indigo-600/10 text-white border-l-4 border-indigo-500 px-6 py-3 active:opacity-80 transition-opacity font-medium" href="#">
+<span class="material-symbols-outlined text-indigo-400" style="font-variation-settings: 'FILL' 1;">terminal</span>
+                Agent Log
+            </a>
+</div>
+</nav>
+<!-- Main Content Wrapper -->
+<div class="ml-[260px] flex-1 flex flex-col h-screen overflow-hidden">
+<!-- TopAppBar Component -->
+<header class="sticky top-0 w-full border-b bg-white/80 dark:bg-slate-900/80 backdrop-blur-md text-indigo-600 dark:text-indigo-400 font-inter font-medium text-sm text-lg font-bold text-slate-900 dark:text-white border-slate-200 dark:border-slate-800 shadow-sm flex items-center justify-between h-16 px-8 z-10 shrink-0">
+<div class="flex items-center gap-4">
+<span class="text-lg font-bold text-slate-900">Sentinel</span>
+</div>
+<div class="flex items-center gap-4">
+<!-- Trailing Primary Action -->
+<div class="flex items-center gap-2 px-3 py-1.5 bg-indigo-50 border border-indigo-100 rounded-full text-indigo-700 font-label-caps text-label-caps">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span>
+</span>
+                    Agent Running
+                </div>
+<!-- Trailing Secondary Action -->
+<span class="px-2 py-1 bg-slate-100 text-slate-600 rounded text-[10px] font-bold tracking-wider uppercase">Pro</span>
+<!-- Trailing Icon Actions -->
+<div class="flex items-center gap-1">
+<button class="p-2 text-slate-500 hover:bg-slate-50 rounded-lg transition-colors scale-95 transition-transform duration-150 flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+</button>
+<button class="p-2 text-slate-500 hover:bg-slate-50 rounded-lg transition-colors scale-95 transition-transform duration-150 flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Page Canvas -->
+<main class="flex-1 p-xl bg-surface overflow-hidden flex flex-col">
+<!-- Header & Controls -->
+<div class="flex items-center justify-between mb-md shrink-0">
+<div>
+<h2 class="font-h2 text-h2 text-on-surface">Agent Stream</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">Real-time output from the autonomous test runner.</p>
+</div>
+<div class="flex items-center bg-surface-container rounded-lg p-1 shadow-sm border border-outline-variant/30">
+<button class="flex items-center gap-2 px-4 py-2 bg-surface text-on-surface rounded-md shadow-sm border border-outline-variant/50 font-label-caps text-label-caps transition-all hover:bg-surface-container-highest">
+<span class="material-symbols-outlined text-[16px]">pause</span>
+                        Pause scroll
+                    </button>
+<div class="w-px h-6 bg-outline-variant/50 mx-2"></div>
+<label class="flex items-center gap-2 px-3 py-2 cursor-pointer group">
+<div class="relative flex items-center">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-8 h-4 bg-outline-variant/50 rounded-full peer peer-checked:bg-primary transition-colors"></div>
+<div class="absolute left-0.5 top-0.5 bg-white w-3 h-3 rounded-full transition-transform peer-checked:translate-x-4 shadow-sm"></div>
+</div>
+<span class="font-label-caps text-label-caps text-on-surface-variant group-hover:text-on-surface transition-colors">Auto-scroll</span>
+</label>
+</div>
+</div>
+<!-- Terminal Component -->
+<div class="flex-1 bg-[#0f111a] rounded-xl border border-slate-800 shadow-2xl flex flex-col overflow-hidden">
+<!-- Terminal Header Bar -->
+<div class="bg-[#1a1d27] px-4 py-2 border-b border-slate-800 flex items-center justify-between shrink-0">
+<div class="flex gap-2 items-center">
+<div class="w-3 h-3 rounded-full bg-slate-600"></div>
+<div class="w-3 h-3 rounded-full bg-slate-600"></div>
+<div class="w-3 h-3 rounded-full bg-slate-600"></div>
+</div>
+<div class="font-mono text-[12px] text-slate-400 tracking-wider">sentinel-node-nyc3-01 :: agent_session_88a9f</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[14px] text-slate-500">memory</span>
+<span class="font-mono text-[11px] text-slate-400">128MB</span>
+</div>
+</div>
+<!-- Terminal Body (Scrollable) -->
+<div class="flex-1 p-6 overflow-y-auto font-mono text-mono leading-relaxed space-y-1.5 custom-scrollbar">
+<!-- Normal Log -->
+<div class="flex items-start gap-4 hover:bg-white/5 px-2 py-0.5 rounded -mx-2 transition-colors">
+<span class="text-slate-500 w-24 shrink-0 select-none">[14:02:11]</span>
+<span class="text-white break-all">Initializing autonomous test suite 'Regression_Q3_Release'...</span>
+</div>
+<!-- Normal Log -->
+<div class="flex items-start gap-4 hover:bg-white/5 px-2 py-0.5 rounded -mx-2 transition-colors">
+<span class="text-slate-500 w-24 shrink-0 select-none">[14:02:12]</span>
+<span class="text-white break-all">Environment provisioned. Context isolated. Target URL: https://staging.acmecorp.com/login</span>
+</div>
+<!-- Gemini Vision (Blue) -->
+<div class="flex items-start gap-4 hover:bg-white/5 px-2 py-0.5 rounded -mx-2 transition-colors">
+<span class="text-slate-500 w-24 shrink-0 select-none">[14:02:15]</span>
+<span class="text-blue-400 break-all"><span class="font-bold text-blue-500">[VISION]</span> Analyzing rendered DOM. Identified authentication form structure. Found input coordinates: {x: 450, y: 320, confidence: 0.99}.</span>
+</div>
+<!-- Normal Log -->
+<div class="flex items-start gap-4 hover:bg-white/5 px-2 py-0.5 rounded -mx-2 transition-colors">
+<span class="text-slate-500 w-24 shrink-0 select-none">[14:02:16]</span>
+<span class="text-white break-all">Injecting test credentials for user role: Administrator.</span>
+</div>
+<!-- Pass (Green) -->
+<div class="flex items-start gap-4 hover:bg-emerald-900/20 px-2 py-0.5 rounded -mx-2 transition-colors bg-emerald-900/10">
+<span class="text-emerald-700 w-24 shrink-0 select-none">[14:02:18]</span>
+<span class="text-emerald-400 break-all">✓ Assertion Passed: Login successful. Dashboard element '#main-nav' is visible.</span>
+</div>
+<!-- Normal Log -->
+<div class="flex items-start gap-4 hover:bg-white/5 px-2 py-0.5 rounded -mx-2 transition-colors">
+<span class="text-slate-500 w-24 shrink-0 select-none">[14:02:20]</span>
+<span class="text-white break-all">Navigating to Settings &gt; Billing. Attempting to click 'Update Payment Method'.</span>
+</div>
+<!-- Failure (Red) -->
+<div class="flex items-start gap-4 hover:bg-red-900/20 px-2 py-0.5 rounded -mx-2 transition-colors bg-red-900/10 border-l-2 border-red-500">
+<span class="text-red-700 w-24 shrink-0 select-none pl-2">[14:02:25]</span>
+<span class="text-red-400 break-all">✗ Error: ElementLocatorException. Selector 'button#update-billing' not found in DOM after 5000ms timeout.</span>
+</div>
+<!-- Self-heal (Amber) -->
+<div class="flex items-start gap-4 hover:bg-amber-900/20 px-2 py-0.5 rounded -mx-2 transition-colors bg-amber-900/10 border-l-2 border-amber-500 mt-2">
+<span class="text-amber-700 w-24 shrink-0 select-none pl-2">[14:02:26]</span>
+<span class="text-amber-400 break-all"><span class="font-bold text-amber-500">⚠ SELF-HEAL ENGAGED:</span> DOM structure mismatch detected. Pausing execution to evaluate alternatives.</span>
+</div>
+<!-- Gemini Vision (Blue) -->
+<div class="flex items-start gap-4 hover:bg-white/5 px-2 py-0.5 rounded -mx-2 transition-colors">
+<span class="text-slate-500 w-24 shrink-0 select-none">[14:02:28]</span>
+<span class="text-blue-400 break-all"><span class="font-bold text-blue-500">[VISION]</span> Scanning viewport for semantic matches to "Update Payment Method". Identified modified component: '&lt;div class="btn-primary" data-action="billing-edit"&gt;'. Visual similarity: 94%.</span>
+</div>
+<!-- Self-heal (Amber) -->
+<div class="flex items-start gap-4 hover:bg-amber-900/20 px-2 py-0.5 rounded -mx-2 transition-colors bg-amber-900/10 border-l-2 border-amber-500">
+<span class="text-amber-700 w-24 shrink-0 select-none pl-2">[14:02:29]</span>
+<span class="text-amber-400 break-all"><span class="font-bold text-amber-500">⚠ HEAL SUCCESS:</span> Selector automatically patched for this run. Resuming execution flow.</span>
+</div>
+<!-- Normal Log -->
+<div class="flex items-start gap-4 hover:bg-white/5 px-2 py-0.5 rounded -mx-2 transition-colors mt-2">
+<span class="text-slate-500 w-24 shrink-0 select-none">[14:02:31]</span>
+<span class="text-white break-all">Clicking updated selector. Awaiting modal render...</span>
+</div>
+<!-- Cursor -->
+<div class="flex items-start gap-4 px-2 py-1 mt-4">
+<span class="w-2.5 h-4 bg-slate-400 animate-pulse inline-block"></span>
+</div>
+</div>
+</div>
+</main>
+</div>
+<style>
+        /* Custom scrollbar for terminal to keep it sleek */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #0f111a; 
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #2a2e3d; 
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #3f4559; 
+        }
+    </style>
+</body></html>

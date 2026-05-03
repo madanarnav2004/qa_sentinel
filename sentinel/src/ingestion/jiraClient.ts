@@ -366,6 +366,63 @@ class JiraApiClient {
 
     return key;
   }
+
+  /**
+   * Create a Bug with arbitrary ADF description, optional labels, then caller attaches files.
+   */
+  async createBugIssue(params: {
+    summary: string;
+    descriptionAdf: Record<string, unknown>;
+    severityForPriority: string;
+    labels: string[];
+  }): Promise<string> {
+    const body = {
+      fields: {
+        project: { key: this.projectKey },
+        summary: params.summary,
+        description: params.descriptionAdf,
+        issuetype: { name: "Bug" },
+        priority: { name: severityToPriorityName(params.severityForPriority) },
+        labels: params.labels,
+      },
+    };
+
+    const res = await this.http.post("/rest/api/3/issue", body);
+    if (res.status < 200 || res.status >= 300) {
+      throw new Error(`Jira createBugIssue failed (${res.status}): ${JSON.stringify(res.data)}`);
+    }
+
+    const parsed = CreateIssueResponseSchema.safeParse(res.data);
+    if (!parsed.success) {
+      throw new Error(`Jira createBugIssue invalid response: ${parsed.error.message}`);
+    }
+
+    return parsed.data.key;
+  }
+
+  async addComment(issueKey: string, plainText: string): Promise<void> {
+    const body = {
+      body: {
+        type: "doc",
+        version: 1,
+        content: [
+          {
+            type: "paragraph",
+            content: [{ type: "text", text: plainText }],
+          },
+        ],
+      },
+    };
+
+    const res = await this.http.post(
+      `/rest/api/3/issue/${encodeURIComponent(issueKey)}/comment`,
+      body,
+    );
+
+    if (res.status < 200 || res.status >= 300) {
+      throw new Error(`Jira addComment failed (${res.status}): ${JSON.stringify(res.data)}`);
+    }
+  }
 }
 
 function filenameFromPath(filePath: string): string {

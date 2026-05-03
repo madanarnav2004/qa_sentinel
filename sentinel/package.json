@@ -5,7 +5,8 @@
   "description": "QA sentinel — ingestion, reasoning, Playwright driver, Jira reporting",
   "main": "dist/orchestrator/index.js",
   "scripts": {
-    "start": "ts-node src/orchestrator/index.ts"
+    "start": "ts-node src/orchestrator/index.ts",
+    "demo:ui": "node scripts/demo-static-server.mjs"
   },
   "engines": {
     "node": ">=18"
